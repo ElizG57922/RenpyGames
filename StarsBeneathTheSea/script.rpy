@@ -11,8 +11,8 @@ default sanity = 3
 define isMale = True
 
 label start:
-    "Choose a character..."
     menu:
+        "Choose a character..."
         "Marina":
             $person = Character(_("Marina"), color="#dd0000")
             $pronouns = ["Princess", "princess", "She","she","Her","her","Her","her"]
