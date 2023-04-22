@@ -1,18 +1,22 @@
 define p = Character(_("You"), color="#007777")
 define tp = Character(_("Princess"), color="#ff7777")
 define s = Character(_("Soldier"), color="#dd3333")
+define cc = Character(_("Clockwork Council"), color="#eecc00")
 
 define inventory = []
 define eProg = 1
 define wProg = 1
-    
+
 label start:
     call prelude
     while (eProg < 3 and wProg < 3):
         "What will you do?"
         menu:
             "Go East"  if eProg > 0::
-                call e1
+                if(eProg == 1):
+                    call e1
+                elif (eProg == 2):
+                    call e2
             "Go West"  if eProg > 0::
                 if(wProg == 1):
                     call w1
@@ -30,15 +34,21 @@ label viewInventory:
 
 
 label w1:
-    "Rows of old houses, most of them crumbling, line the path into the city. You pick your way along, avoiding the potholes and dislodged flagstones. Even though it's not the same city, there are so few signs of civilization in this place that it reminds you of your home from all those years ago, before you were taken here."
-    "One building seems a lot better maintained than the rest. You head over to it. It might have some canned food and water, and it will hopefully not collapse on top of your head."
+    "Rows of old houses, most of them crumbling, line the path into the city. You pick your way along, avoiding the potholes and dislodged flagstones that mark your path. Even though it's not the same city, there are so few signs of civilization in this place that it reminds you of your home from all those years ago, before you were taken here."
+    "Eventually you reach a set of buildings that seem a lot better maintained than the rest, and you head over to one of them. It might have some canned food and water, and it will hopefully not collapse on top of your head."
     "Rummaging through the drawers, you find some stored provisions. You eat your fill and put the rest in your pack for later. Then, you exit the building and get ready to take your leave of the city."
+    python:
+        inventory.append("A can of food. The writing is in a language you don't recognize, but the stuff inside seems edible.")
     "As you head back outside, however, you hear footsteps and catch sight of a figure walking down the street. Its torso swivels and it turns toward you sharply, sword drawn."
     s "Halt. Identify yourself."
     "You duck beneath the window, narrowly avoiding a swipe of its sword. After a few moments, you hear the footsteps continue on. Peeping back out the window, you see that the soldier has resumed its patrol down the street. As soon as it hears you, however, it swivels back with a mechanical whir and once again draws its sword."
     s "Halt. Identify yourself."
-    "The soldier seems to have a very short memory, and when he once again turns around to continue on his patrol, you see the reason why. A large key protrudes from his back, not unlike the one you would find on a windup toy. This soldier is nothing more than a life-sized toy."
+    "The soldier seems to have a very short memory, and when he once again turns around to continue on his patrol, you see the reason why. A large key protrudes from his back, not unlike the one you would find on a windup toy. This soldier is nothing more than a life-sized doll."
     "You watch him mechanically step into another building at the end of the road. He does not come out, but another soldier, identical except for some damage around its left arm, marches out for presumably the same circuit. It appears that you've found their headquarters."
+    "Wisely deciding that the headquarters of a bunch of life-sized toy soldiers armed with distinctly not-toy weapons is not the place you'd like to go, you creep back the way you came, intending to head back to the caverns. Unfortunately for you, you seem to have misjudged the soldiers' route and run into one on your way out."
+    s "Halt. Identify yourself."
+    "Unfortunately, it doesn't take 'leave me alone' as a valid identification. The soldier drags you back down the path and into the headquarters, ignoring your struggles. It takes you into the building and heads over to a pile of junk, where several other toy soldiers are standing at attention."
+
     "Deciding that that's been enough adventure for the moment, you head back to the entrance to the caverns to think things over. The troll is squatting behind a rock half its height just inside the cave, and it glances hopefully in your direction. It looks like you still have some time to kill."
     "You can either head back to the west and look into the headquarters, or explore the forest to the east."
     return
@@ -76,13 +86,25 @@ label e1:
     "The mouse scurries down her arm and into the tower. The princess's smile fades."
     tp "Of course, I do appreciate it greatly, but there's only so far one can get with the help of mice and humans and other small animal friends."
     tp "And to be candid, I'm not sure how much longer I'll be able to stay hidden from my sister."
-    "She gives yet another sigh and then seems to remember you."
+    "She gives yet another sigh and then seems to remember that you're still present."
     tp "Oh, what's wrong with me, burdening a guest with my woes? I'm sorry, I'm all out of sorts and not presentable in the slightest. Pardon my manners, I believe I ought to return to bed. Oh, I've such a headache..."
     "She closes the window, one hand against her forehead. Suddenly, she is back at the top of the tower, opening the upper window."
     tp "Please, help yourselves to the rest of the biscuits."
-    "Well fed, you return to the entrance of the caverns and look around. The cave troll has resorted to all the cunning its pea-sized brain can muster, and it's now attempting to pretend to be a rock. This ruse would be far more effective if it didn't stop to scratch it's rear every twelve seconds."
+    python:
+        inventory.append("A half-eaten biscuit. The half appears to have been eaten by a squirrel.")
+    "Satiated, you return to the entrance of the caverns and look around. The cave troll has resorted to all the cunning its pea-sized brain can muster, and it's now attempting to pretend to be a rock. This ruse would be far more effective if it didn't stop to scratch it's rear every twelve seconds."
     "Well, it looks like it will still be some time yet before you can return to your sleeping nook. You can either head back to the east and agree to help the princess, or explore the ruins to the west."
     $ eProg += 1
+    return
+    
+label e2:
+    "You head back into the forest and find the tower princess. Her animal friends are still eating happily, and the princess herself gazes out the tower and watches you approach."
+    menu:
+        "I've decided to help you":
+            $ eProg += 1
+            $ wProg = 0
+        "Never mind, I have to do somethine else first":
+            pass
     return
 
 label prelude:
