@@ -9,22 +9,23 @@ define wProg = 1
 
 
 label start:
-    "z"
-    scene bg green with Dissolve(4.0):
-        size (2280, 1620) crop (0, 140, 1920, 1080)
-        linear 4 crop (160, 140, 1920, 1082)
-    scene bg green with fade
+    scene bg pines
     call prelude
+    scene bg black
+    scene bg pines with Dissolve(5.0):
+        size (1920, 1080) crop (0, 140, 1280, 720)
+        linear 4 crop (160, 140, 1280, 720)
+    scene bg pines with fade
 
     while (eProg < 3 and wProg < 3):
-        "What will you do?"
         menu:
-            "Go East" if eProg > 0:
+            "What will you do?"
+            "Go to the forest" if eProg > 0:
                 if(eProg == 1):
                     call e1
                 elif (eProg == 2):
                     call e2
-            "Go West" if wProg > 0:
+            "Go to the ruins" if wProg > 0:
                 if(wProg == 1):
                     call w1
             "Examine self":
@@ -33,9 +34,15 @@ label start:
 
 label viewInventory:
     "You examine your possessions."
-    python:
-        inventory_text = '\n\n'.join(inventory)
-    "[inventory_text]"
+    define i = 0
+    define inventory_text=""
+    while i<len(inventory):
+        python:
+            inventory_text += inventory[i]
+        $i += 1
+        "[inventory_text]"
+        $inventory_text=""
+
     "And that's it."
     return
 
@@ -54,7 +61,18 @@ label w1:
     "You watch him mechanically step into another building at the end of the road. He does not come out, but another soldier, identical except for some damage around its left arm, marches out for presumably the same circuit. It appears that you've found their headquarters."
     "Wisely deciding that the headquarters of a bunch of life-sized toy soldiers armed with distinctly not-toy weapons is not the place you'd like to go, you creep back the way you came, intending to head back to the caverns. Unfortunately for you, you seem to have misjudged the soldiers' route and run into one on your way out."
     s "Halt. Identify yourself."
-    "Unfortunately, it doesn't take 'leave me alone' as a valid identification. The soldier drags you back down the path and into the headquarters, ignoring your struggles. It takes you into the building and heads over to a pile of junk, where several other toy soldiers are standing at attention."
+    "Unfortunately, it doesn't take 'please let me go' as a valid identification. The soldier drags you back down the path and into the headquarters, ignoring your struggles. It takes you into the building and heads over to a pile of junk, where several other toy soldiers are standing at attention."
+    s "Intruder apprehended. Awaiting orders."
+    "It goes still, but its grip holds firm. The other soldiers also remain motionlessly at attention, guarding their pile of junk."
+    "Except, as you look closer, you realize that it isn't a pile of junk. It's a pile of broken toy soldiers and windup dolls and other old clockwork toys, all melted together in a heap. Scores of painted eyes examine you, and when the dozen mechanical mouths that still function open, a cacophony of voices speaks to you."
+    cc "You are not a toy. Why do you intrude upon our domain?"
+    "You attempt to give a reasonable explanation for your presence, which breaks down into sobbing hysterics after about two words. The Clockwork Council grumbles in annoyance, cutting you off."
+    cc "We have no use for organic servants. Leave us."
+    "You gratefully scamper toward the exit. Unfortunately, the toy solders guarding it cross their swords and block it."
+    s "Intruder apprehended. Awaiting orders."
+    "A few of the Clockwork Council's heads look up from the map it's studying and give a dismissive nod for them to let you go."
+    "This would be all well and good, except that there are at least a dozen toys on patrol outside. You make it as far as the "
+    cc "What idiots. It would be easier to kill you if it didn't make such a mess."
 
     "Deciding that that's been enough adventure for the moment, you head back to the entrance to the caverns to think things over. The troll is squatting behind a rock half its height just inside the cave, and it glances hopefully in your direction. It looks like you still have some time to kill."
     "You can either head back to the west and look into the headquarters, or explore the forest to the east."
@@ -67,12 +85,12 @@ label e1:
     tp "Greetings. Welcome to my forest."
     "The girl disappears, and a window at the base of the tower slides open. She appears and blinks with her large, dark-rimmed eyes."
     tp "Hello. I'm the tower princess."
-    "You would like to question how she just moved from the top of the tower to down here in three seconds flat, but the princess leans forward and continues speaking."
-    tp "It's nice to meet you. My animal friends and I were just about to have some tea and biscuits. Would you like to join us?"
-    "You are still very much confused over who this girl is, or what she's doing in a tower in the middle of the woods. Still, you haven't been eating too well lately, and the offer of food is too enticing to pass up."
-    p "Just to be clear, they're regular animal friends, right? Not monsters or, um, bears or wolves or anything?"
-    tp "Yes, they're regular animal friends. I promise, on my honor as a princess."
-    p "Okay then. Sure, thanks."
+    "You would like to question how she just moved from the top of the tower to down here in three seconds flat, but that would be rude. The monsters here seem to have a very good sense of manners, even if they don't quite understand concepts such as 'mercy'."
+    tp "My animal friends and I were just about to have some tea and biscuits. Would you like to join us as a guest?"
+    "You are still very much confused over who this girl is, or what she's doing in a tower in the middle of the woods. Still, you haven't been eating too well lately, and there are some pretty sacred rules against hurting guests here."
+    "Just to be on the safe side, you do ask if her animal friends are bears or wolves or monsters or anything dangerous. The princess assures you that no, they are regular animal friends."
+    tp "I promise, on my honor as a princess."
+    "You thank the lovely princess and prepare to attend her tea party."
     "The tower princess extends a hand and begins to sing. Sparrows and squirrels and a dozen mice swarm the tower. True to her word, only normal animals are present, although one of the badgers looks surly enough to attack anyone who tries to pet it."
     tp "Please, take a biscuit. I'll start brewing the tea."
     "She steps away from the window and retrieves a plate of biscuits from the tower's pantry. She hands one to you, picks up one herself, and passes the rest over to the animals. As they begin to eat their share, you take a tentative bite. It's buttery and melts in your mouth, and reminds you of just how hungry you are. You devour the rest of it with significantly less grace than the princess."
@@ -99,19 +117,29 @@ label e1:
     tp "Please, help yourselves to the rest of the biscuits."
     python:
         inventory.append("A half-eaten biscuit. The half appears to have been eaten by a squirrel.")
-    "Satiated, you return to the entrance of the caverns and look around. The cave troll has resorted to all the cunning its pea-sized brain can muster, and it's now attempting to pretend to be a rock. This ruse would be far more effective if it didn't stop to scratch it's rear every twelve seconds."
+    "You snag one more biscuit and return to the entrance of the caverns. The cave troll has resorted to all the cunning its pea-sized brain can muster, and it's now attempting to pretend to be a rock. This ruse would be far more effective if it didn't stop to scratch it's rear every twelve seconds."
     "Well, it looks like it will still be some time yet before you can return to your sleeping nook. You can either head back to the east and agree to help the princess, or explore the ruins to the west."
     $ eProg += 1
     return
 
 label e2:
-    "You head back into the forest and find the tower princess. Her animal friends are still eating happily, and the princess herself gazes out the tower and watches you approach."
+    "You head back into the forest and find the tower princess. Her animal friends are still eating happily, and the princess herself gazes out the tower, watching you approach."
+    tp "Hello. Did you need something?"
     menu:
-        "I've decided to help you":
+        "I've decided to help you get your crown":
             $ eProg += 1
             $ wProg = 0
+            "The princess looks surprised. After a moment she closes the upper window and, with inhuman speed, is back at the base of the tower."
+            tp "You would do this for me?"
+            "Whatever motive you have, be it out of genuine kindness or simply the chance to have a powerful creature in your debt, you nod."
+            "The princess turns away, looking stricken."
+            tp "I...could not ask you to brave this danger for me. No more than I could ask Flit and his mice to face her armies."
+            tp "My sister is for me to face alone. But if...if you do wish to help me, I would appreciate it."
+            "She pulls herself up, looking tired but regal."
+            tp "If you wish it, there is one whose help we may be able to procure, though I am trapped here and cannot enlist her myself"
+
         "Never mind, I have to do something else first":
-            pass
+            "You excuse yourself and head back to the entrance of the caverns, where the troll is still waiting hopefully."
     return
 
 label prelude:
@@ -124,128 +152,4 @@ label prelude:
         inventory.append("A small dagger, more useful for skinning rats than fending off monsters.")
         inventory.append("The tattered livery of your old master. It doesn't mean much now that he's dead.")
         inventory.append("Fifteen dollars worth of American bills and coins. Such currency is useless in this land.")
-    return
-
-
-
-
-
-
-
-label test:
-    scene bg green
-    "Foo"
-    menu:
-        "Memoria":
-            call memory_game
-    "Bar"
-    return
-
-
-
-
-#memoria
-##### The game screen
-screen memo_scr:
-    ##### Timer
-
-    timer 30.0 action If (memo_timer > 1, SetVariable("memo_timer", memo_timer - 1), Jump("memo_game_lose") ) repeat True
-    bar value AnimatedValue(value=0, range=30, old_value=30, delay=30.0) xalign 0.5 xsize 500
-    timer 1.0 action If (memo_timer > 1, SetVariable("memo_timer", memo_timer - 1), Jump("memo_game_lose") ) repeat True
-    text str(memo_timer) xalign 0.5 yalign 0.05
-
-
-    ##### Cards
-    grid 3 4:
-        xalign 0.5
-        yalign 0.5
-        spacing 5
-        for card in cards_list:
-            button:
-                background None
-                if card["c_chosen"]:        # shows the face of the card
-                    text card["c_value"]
-                else:                       # shows the back of the card
-                    text "X"
-
-                action If ( (card["c_chosen"] or not can_click), None, [SetDict(cards_list[card["c_number"]], "c_chosen", True), Return(card["c_number"]) ] )
-
-init:
-    python:
-        def cards_shuffle(x):
-            renpy.random.shuffle(x)
-            return x
-
-label memory_game:
-    #####
-    # At first, let's set the cards to play (the amount should match the grid size - in this example 12)
-    $ values_list = ["A", "A", "A", "A", "A", "A", "B", "B", "B", "B", "B", "B"]
-
-    # Then - shuffle them
-    $ values_list = cards_shuffle(values_list)
-
-    # And make the cards_list that describes all the cards
-    $ cards_list = []
-    python:
-        for i in range (0, len(values_list) ):
-            cards_list.append ( {"c_number":i, "c_value": values_list[i], "c_chosen":False} )
-
-    # Set the timer
-    $ memo_timer = 30.0
-
-    # Shows the game screen
-    show screen memo_scr
-
-    # The game loop
-    label memo_game_loop:
-        $ can_click = True
-        $ turned_cards_numbers = []
-        $ turned_cards_values = []
-
-        # Let's set the amount of cards that should be opened each turn (all of them should match to win)
-        $ turns_left = 2
-
-        label turns_loop:
-            if turns_left > 0:
-                $ result = ui.interact()
-                $ memo_timer = memo_timer
-                $ turned_cards_numbers.append (cards_list[result]["c_number"])
-                $ turned_cards_values.append (cards_list[result]["c_value"])
-                $ turns_left -= 1
-                jump turns_loop
-
-        # To prevent further clicking before chosen cards will be processed
-        $ can_click = False
-        # If not all the opened cards are matched, will turn them face down after pause
-        if turned_cards_values.count(turned_cards_values[0]) != len(turned_cards_values):
-            $ renpy.pause (1.0, hard = True)
-            python:
-                for i in range (0, len(turned_cards_numbers) ):
-                    cards_list[turned_cards_numbers[i]]["c_chosen"] = False
-
-        # If cards are matched, will check if player has opened all the cards
-        else:
-            $ renpy.pause (1.0, hard = True)
-            python:
-                # Let's remove opened cards from game field
-                # But if you prefer to let them stay - just comment out next 2 lines
-                for i in range (0, len(turned_cards_numbers) ):
-                    cards_list[turned_cards_numbers[i]]["c_value"] = Null()
-
-                for j in cards_list:
-                    if j["c_chosen"] == False:
-                        renpy.jump ("memo_game_loop")
-                renpy.jump ("memo_game_win")
-        jump memo_game_loop
-
-label memo_game_lose:
-    hide screen memo_scr
-    $ renpy.pause (0.1, hard = True)
-    "You lose! Try again."
-    jump memory_game
-
-label memo_game_win:
-    hide screen memo_scr
-    $ renpy.pause (0.1, hard = True)
-    "You win!"
     return
