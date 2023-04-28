@@ -9,13 +9,8 @@ define wProg = 1
 
 
 label start:
-    scene bg pines
+    scene bg cave
     call prelude
-    scene bg black
-    scene bg pines with Dissolve(5.0):
-        size (1920, 1080) crop (0, 140, 1280, 720)
-        linear 4 crop (160, 140, 1280, 720)
-    scene bg pines with fade
 
     while (eProg < 3 and wProg < 3):
         menu:
@@ -48,6 +43,11 @@ label viewInventory:
 
 
 label w1:
+    scene bg black
+    scene bg city with Dissolve(5.0):
+        size (1920, 1080) crop (0, 140, 1280, 720)
+        linear 4 crop (160, 140, 1280, 720)
+    scene bg city with fade
     "Rows of old houses, most of them crumbling, line the path into the city. You pick your way along, avoiding the potholes and dislodged flagstones that mark your path. Even though it's not the same city, there are so few signs of civilization in this place that it reminds you of your home from all those years ago, before you were taken here."
     "Eventually you reach a set of buildings that seem a lot better maintained than the rest, and you head over to one of them. It might have some canned food and water, and it will hopefully not collapse on top of your head."
     "Rummaging through the drawers, you find some stored provisions. You eat your fill and put the rest in your pack for later. Then, you exit the building and get ready to take your leave of the city."
@@ -67,18 +67,27 @@ label w1:
     "Except, as you look closer, you realize that it isn't a pile of junk. It's a pile of broken toy soldiers and windup dolls and other old clockwork toys, all melted together in a heap. Scores of painted eyes examine you, and when the dozen mechanical mouths that still function open, a cacophony of voices speaks to you."
     cc "You are not a toy. Why do you intrude upon our domain?"
     "You attempt to give a reasonable explanation for your presence, which breaks down into sobbing hysterics after about two words. The Clockwork Council grumbles in annoyance, cutting you off."
-    cc "We have no use for organic servants. Leave us."
+    cc "This one is harmless. Leave, before I grow more vexed with your presence."
     "You gratefully scamper toward the exit. Unfortunately, the toy solders guarding it cross their swords and block it."
     s "Intruder apprehended. Awaiting orders."
     "A few of the Clockwork Council's heads look up from the map it's studying and give a dismissive nod for them to let you go."
-    "This would be all well and good, except that there are at least a dozen toys on patrol outside. You make it as far as the "
-    cc "What idiots. It would be easier to kill you if it didn't make such a mess."
-
-    "Deciding that that's been enough adventure for the moment, you head back to the entrance to the caverns to think things over. The troll is squatting behind a rock half its height just inside the cave, and it glances hopefully in your direction. It looks like you still have some time to kill."
-    "You can either head back to the west and look into the headquarters, or explore the forest to the east."
+    "This would be all well and good, except that there are at least a dozen toys on patrol outside. You make it as far as the street before they bring you back. The Council looks more than slightly annoyed to see you again."
+    cc "Idiots. We deserve better than this, cast away to this forsaken outpost with cogs-for-brains soldiers as our only assistants. The sooner they find that final golden thread, the sooner we can leave this scrap heap."
+    cc "It would be easier to kill you if it didn't make such a mess."
+    "Its mechanical jaws clatter and it deliberates with itself for a moment. It looks at you, deciding if you might just be a step up from a cogs-for-brains toy."
+    cc "Fine. Since you seem so intent on showing up here, we will allow you to assist us. I am in good standing with my master, and if you can find our last golden thread, we will be grateful."
+    "You twitch uncomfortably. You know nothing about this golden thread or how it might be obtained, but you're pretty sure the Council won't stab you in the back if you help it. The monsters here are real sticklers about reciprocity."
+    cc "Consider it. Now, to deal with these toys."
+    "After it gives some very detailed orders to the soldiers on how they are not to apprehend any intruders for the next five minutes, you make your escape and head back to the entrance to the caverns to think things over. The troll is squatting behind a rock half its height just inside the cave, and it glances hopefully in your direction. It looks like you still have some time to kill."
+    "You can either head back to the west and return to the Council, or explore the forest to the east."
     return
 
 label e1:
+    scene bg black
+    scene bg pines with Dissolve(5.0):
+        size (1920, 1080) crop (0, 140, 1280, 720)
+        linear 4 crop (160, 140, 1280, 720)
+    scene bg pines with fade
     "You wander through the forest, the grass cool against your feet. Although the sun never rises above the glow of early dawn, songbirds and other creatures of the daytime can be heard around the trees. But no monsters leap out to devour you, and you gradually begin to relax."
     "That's when you see the tower."
     "It looks rickety but quaint. Innocent, even. You stand at the base of the structure, trying to weigh the prospect of it having food against the possibility of it having an awful abomination, when a face appears at the window."
