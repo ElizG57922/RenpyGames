@@ -25,7 +25,7 @@ label start:
                     call w1
                 elif (wProg == 2):
                     call w2
-                elif (wProg == 3):
+                elif (wProg == 3 or wProg == 4):
                     call w3
             "Go to the field beyond the ruins" if wProg == 3:
                 call field
@@ -66,18 +66,19 @@ label field:
     menu:
         "Fight the SkyHooks":
             pass
-    "You are comparatively the size of a pea and presumably just as squishy. All the same, you punch one of the hooks that is closing in on you. Your fist clenches in pain, and the hook barely sways."
+    "You are comparatively the size of a pea and presumably just as squishy. All the same, you punch one of the hooks that is closing in on you."
+    "Your fist clenches in pain, and the hook barely sways."
     menu:
         "Commune with the SkyHooks":
             pass
-    "You're not even sure if all these hooks are one entity or individual creatures, but in the most polite and not-panicked way you can currently manage, you ask what the Sky Hooks want."
-    "To your surprise, the ShyHooks deign to respond:"
+    "You're not even sure if all these hooks are one entity or individual creatures, but in the most polite and not-panicky way you can currently manage, you ask what the SkyHooks want."
+    "To your surprise, the SkyHooks deign to respond:"
     define longShake = Move((25, 0), (-25, 0), .20, bounce=True, repeat=True, delay=.5)
     scene bg skyhooksleep with longShake
     $renpy.pause()
-    scene bg skyhookless
+    scene bg skyhookless with fade
     "You wake up in the field. The cracks in the sky are gone, as are the SkyHooks. You have the unpleasant feeling that all your internal organs have been removed and poked at, but at least the SkyHooks were polite enough to put you back together once they were finished."
-    "Oh, hey, there's also a dead body next to you. It's holding a golden thread and appears to be one of the thieves who stole it. The Clockwork Council will be pleased."
+    "Oh, hey, there's also a dead body next to you. It's holding a golden thread and appears to be one of the thieves who stole it from the Toymaker. The Clockwork Council will be pleased."
     $wProg += 1
     return
 
@@ -124,30 +125,36 @@ label w1:
 
 label w2:
     "Finding the Council is easy. Within half an hour of entering the city, one of the soldiers is once again dragging you before the conglomerated abomination. It tells you to state your business, and that it hopes for both your sakes that this is for something important."
-    menu:
-        "I'll help you find your golden thread.":
-            $ wProg += 1
-            $ eProg = 0
-            cc "Your assistance is, of course, appreciated."
-            "It produces a map,"
-            cc "By our calculations, it should be in the field just past these ruins. The soldiers found the other threads here, but this last one has been eluding them."
-            cc "A word of warning: the threads do tend to strangle anyone who attempts to steal them, so we suggest that you bring it here promptly and not get any ideas about taking it for yourself."
-            "You assure the Council that you will return with the thread promptly."
-        "I have a few questions.":
-            call askCouncil
-        "Never mind, I have some things to take care of first.":
-            "The Clockwork Council mutters that it would be simpler to kill you if it didn't make so much of a mess, but it calls off the soldiers and you make your escape. The troll is still maintaining its vigil at the entrance of the caverns."
+    $done=False
+    while not done:
+        cc "For what have you come?"
+        menu:
+            "I'll help you find your golden thread.":
+                $ wProg += 1
+                $ eProg = 0
+                cc "Your assistance is, of course, appreciated."
+                "It produces a map."
+                cc "By our calculations, it should be in the field just past these ruins. The soldiers found the other threads here, but this last one has been eluding them."
+                cc "A word of warning: the threads do tend to strangle anyone who attempts to steal them, so we suggest that you bring it here promptly and not get any ideas about taking it for yourself."
+                "You assure the Council that you will return with the thread promptly, no threats of violence needed."
+                $done=True
+            "I have a few questions.":
+                call askCouncil
+            "Never mind, I have some things to take care of first.":
+                "The Clockwork Council mutters that it would be simpler to kill you if it didn't make so much of a mess, but it calls off the soldiers and you make your escape. The troll is still maintaining its vigil at the entrance of the caverns."
+                $done=True
     return
 
 label w3:
     "You head back to the ruins and the Clockwork Council. A head and uniformed torso are budding off of it, twitching slightly. The new soldier steps off, fully formed, and stands at attention."
     cc "Why have you come?"
-    define done = False
+    $done = False
     while not done:
         menu:
-            "Yes." if wProg == 5:
+            "I've found the thread." if wProg == 4:
                 $ wProg += 1
                 cc "Excellent."
+                "Several hands take it from you and pluck it taught. The Council examines it."
                 $done=True
             "I have a few questions.":
                 call askCouncil
@@ -157,7 +164,7 @@ label w3:
     return
 
 label askCouncil:
-    define stillTalking = True
+    $ stillTalking = True
     while stillTalking:
         menu:
             "Who is your master?":
@@ -228,7 +235,7 @@ label e1:
 label e2:
     "You head back into the forest and find the tower princess. Her animal friends are still eating happily, and the princess herself gazes out the tower, watching you approach."
     tp "Hello again. Did you need something?"
-    define done = False
+    $ done = False
     while not done:
         menu:
             "I've decided to help you get your crown.":
@@ -252,7 +259,7 @@ label e2:
                 $ done=True
     return
 label askPrincess:
-    define stillTalking = True
+    $ stillTalking = True
     while stillTalking:
         menu:
             "Why did your sister take your crown?":
