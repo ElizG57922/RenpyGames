@@ -121,7 +121,7 @@ label wEnd1:
     "Hah."
     "Hah, hah."
     "...hah."
-    show bg badCity
+    scene bg badcity with fade
     centered "End"
     return
 
@@ -136,7 +136,7 @@ label wEnd2:
     "You and the girl look at one another. You both agree that you would very much like to go home."
     cc "Very well then. Why you would wish to return to that dull place is beyond us, but you've proven your merit. At least it gets the two of you out of my wires."
     "It nonchalantly creates a portal and several arms direct you and the girl through it. You get the sense that it will miss you, but hey, you've made it home!"
-    show bg goodCity
+    scene bg goodcity with fade
     centered "End"
     return
 
@@ -470,7 +470,7 @@ label eEnd1:
     "The sister continues to ignore you. She runs her fingers through her marred flesh and screeches at some of her soldiers. You're not sure if her lack of attention is a genuine oversight, or if she's just waiting for you to run out of air."
     "Neither the sister or her soldiers take much notice of your muffled shouts and pounding on the glass. After all, you're only a little thing in a trap, and not worth their attention. Eventually, you slump over in the corner of the jar, every breath taking effort."
     "Your last coherent thought is, 'Maybe I won't be worth it to torture...'"
-    show bg badForest
+    scene bg badforest with fade
     centered "End"
     return
 
@@ -486,7 +486,7 @@ label eEnd2:
     "You assure her that no, it's most certainly fine and not kitschy in the slightest. And now, if she'll excuse you, you'd like to be sick in the corner while she takes on the approaching army. She heartily agrees with this."
     "Congratulations, it looks like you've helped the princess. She obliterates her sister's army and her terrible sister flees. The princess holds good on her promise, and what is left of the world becomes a better place."
     "What the other masters think of this corner is a different story."
-    show bg goodForest
+    scene bg goodforest with fade
     centered "End"
     return
 
